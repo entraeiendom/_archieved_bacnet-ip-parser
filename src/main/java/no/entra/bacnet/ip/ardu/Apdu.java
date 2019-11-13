@@ -9,8 +9,6 @@ public class Apdu implements Serializable {
     private final Enum<Sender> sender;
     private final Enum<PduType> pduType;
 
-    public enum Sender {CLIENT, SERVER}
-
     private final char pduTypeChar;
     private final char senderChar;
     private final char[] invokeId;
@@ -20,15 +18,32 @@ public class Apdu implements Serializable {
         this.pduTypeChar = pduTypeChar;
         this.pduType = PduType.valueOf(String.valueOf(pduTypeChar));
         this.senderChar = senderChar;
-        if (Character.toString(senderChar).equals(SENDER_CLIENT)) {
-            sender = Sender.CLIENT;
-        } else if (Character.toString(senderChar).equals(SENDER_SERVER)) {
-            sender = Sender.SERVER;
-        } else {
-            sender = null;
-        }
+        sender = Sender.fromSenderChar(senderChar);
         this.invokeId = invokeId;
         this.serviceChoice = serviceChoice;
     }
 
+    public Enum<PduType> getPduType() {
+        return pduType;
+    }
+
+    public char getPduTypeChar() {
+        return pduTypeChar;
+    }
+
+    public Enum<Sender> getSender() {
+        return sender;
+    }
+
+    public char getSenderChar() {
+        return senderChar;
+    }
+
+    public char[] getInvokeId() {
+        return invokeId;
+    }
+
+    public char[] getServiceChoice() {
+        return serviceChoice;
+    }
 }
