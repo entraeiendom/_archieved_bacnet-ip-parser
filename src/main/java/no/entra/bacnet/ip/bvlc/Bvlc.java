@@ -8,12 +8,12 @@ public class Bvlc implements Serializable {
     public static final char[] BACNET_HEX = "81".toCharArray();
     private final char[] bacnetOctet;
     private final char[] functionOctet;
-    private final char[] lenghtHex;
+    private final char[] numberOfBvllOctetsLength;
 
-    public Bvlc(char[] bacnetOctet, char[] functionOctet, char[] lenghtHex) {
+    public Bvlc(char[] bacnetOctet, char[] functionOctet, char[] numberOfBvllOctetsLength) {
         this.bacnetOctet = bacnetOctet;
         this.functionOctet = functionOctet;
-        this.lenghtHex = lenghtHex;
+        this.numberOfBvllOctetsLength = numberOfBvllOctetsLength;
     }
 
     public boolean isBacnet() {
@@ -28,7 +28,11 @@ public class Bvlc implements Serializable {
         return functionOctet;
     }
 
-    public char[] getLenghtHex() {
-        return lenghtHex;
+    public char[] getNumberOfBvllOctetsLength() {
+        return numberOfBvllOctetsLength;
+    }
+
+    public int findExpectdNumberOfOctetsInBvll() {
+        return -1;
     }
 }
