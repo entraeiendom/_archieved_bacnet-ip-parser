@@ -8,8 +8,8 @@ public class BvlcParser {
 
     public static Bvlc parseHex(String hexString) {
         char[] bacnetOctet = hexString.substring(0,2).toCharArray();
-        char[] typeOctet = hexString.substring(2,3).toCharArray();
-        char[] lengthHex = hexString.substring(4,7).toCharArray();
+        char[] typeOctet = hexString.substring(2,4).toCharArray();
+        char[] lengthHex = hexString.substring(4,8).toCharArray();
         Bvlc bvlc = new Bvlc(bacnetOctet, typeOctet, lengthHex);
         return bvlc;
     }

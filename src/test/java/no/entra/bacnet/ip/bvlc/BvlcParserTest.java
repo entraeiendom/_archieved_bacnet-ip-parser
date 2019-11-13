@@ -15,5 +15,8 @@ class BvlcParserTest {
         assertNotNull(bvlc);
         assertTrue(bvlc.isBacnet());
         assertTrue(Arrays.equals(bvlc.getBacnetOctet(), "81".toCharArray()));
+        assertArrayEquals( "81".toCharArray(), bvlc.getBacnetOctet());
+        assertArrayEquals( "0b".toCharArray(), bvlc.getFunctionOctet());
+        assertArrayEquals( "0007".toCharArray(), bvlc.getLenghtHex());
     }
 }
