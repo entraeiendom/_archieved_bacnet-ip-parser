@@ -33,6 +33,7 @@ public class Bvlc implements Serializable {
     }
 
     public int findExpectdNumberOfOctetsInBvll() {
-        return -1;
+        String length = String.valueOf(numberOfBvllOctetsLength);
+        return Integer.parseInt(length, 16);
     }
 }
