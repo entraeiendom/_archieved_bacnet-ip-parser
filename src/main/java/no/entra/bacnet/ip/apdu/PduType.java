@@ -1,7 +1,14 @@
 package no.entra.bacnet.ip.apdu;
 
 public enum PduType {
-    ConfirmedRequest('0'), ComplexAck('3');
+    ConfirmedRequest('0'),
+    UnconfirmedRequest('1'),
+    SimpleAck('2'),
+    ComplexAck('3'),
+    SegmentACK('4'),
+    Error('5'),
+    Reject('6'),
+    Abort('7');
 
     private char pduTypeChar;
 
