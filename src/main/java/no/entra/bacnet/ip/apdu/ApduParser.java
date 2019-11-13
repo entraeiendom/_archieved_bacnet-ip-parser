@@ -9,9 +9,24 @@ public class ApduParser {
     public static Apdu parseApduHex(String apduHexString) {
         char pduTypeChar = apduHexString.charAt(0);
         char sender = apduHexString.charAt(1);
-        char[] invokeId = apduHexString.substring(2,4).toCharArray();
-        char[] serviceChoice = apduHexString.substring(4,6).toCharArray();
-        Apdu apdu = new Apdu(pduTypeChar, sender, invokeId, serviceChoice);
+//        char[] invokeId = apduHexString.substring(2,4).toCharArray();
+        char[] serviceChoice = apduHexString.substring(2,4).toCharArray();
+
+        Apdu apdu = findApduFromPduType(pduTypeChar, sender, serviceChoice);
+//        apdu.setInvokeId(invokeId);
+        return apdu;
+    }
+
+    private static Apdu findApduFromPduType(char pduTypeChar, char sender, char[] serviceChoice) {
+        PduType pduType = PduType.fromPduTypeChar(pduTypeChar);
+        Apdu apdu = null;
+        switch (pduType) {
+            case UnconfirmedRequest:
+                apdu = new UnconfirmedRequestApdu(sender,serviceChoice);
+                break;
+            default:
+                apdu = new Apdu(pduTypeChar, sender, serviceChoice);
+        }
         return apdu;
     }
 

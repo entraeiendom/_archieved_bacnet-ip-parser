@@ -6,19 +6,19 @@ public class Apdu implements Serializable {
     private static final long serialVersionUID = 1L;
     private final Enum<Sender> sender;
     private final Enum<PduType> pduType;
+    private Enum<ServiceChoice> serviceChoice = null;
 
     private final char pduTypeChar;
     private final char senderChar;
-    private final char[] invokeId;
-    private final char[] serviceChoice;
+    private char[] invokeId;
+    private final char[] serviceChoiceHex;
 
-    public Apdu(char pduTypeChar, char senderChar, char[] invokeId, char[] serviceChoice) {
+    public Apdu(char pduTypeChar, char senderChar, char[] serviceChoiceHex) {
         this.pduTypeChar = pduTypeChar;
         this.pduType = PduType.fromPduTypeChar(pduTypeChar);
         this.senderChar = senderChar;
         sender = Sender.fromSenderChar(senderChar);
-        this.invokeId = invokeId;
-        this.serviceChoice = serviceChoice;
+        this.serviceChoiceHex = serviceChoiceHex;
     }
 
     public Enum<PduType> getPduType() {
@@ -41,7 +41,20 @@ public class Apdu implements Serializable {
         return invokeId;
     }
 
-    public char[] getServiceChoice() {
+    public char[] getServiceChoiceHex() {
+        return serviceChoiceHex;
+    }
+
+    public void setServiceChoice(Enum<ServiceChoice> serviceChoice) {
+        this.serviceChoice = serviceChoice;
+    }
+
+    public Enum<ServiceChoice> getServiceChoice() {
         return serviceChoice;
     }
+
+    public void setInvokeId(char[] invokeId) {
+        this.invokeId = invokeId;
+    }
+
 }

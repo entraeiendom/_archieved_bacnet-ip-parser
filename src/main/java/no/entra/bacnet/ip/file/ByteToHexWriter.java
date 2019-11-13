@@ -3,9 +3,10 @@ package no.entra.bacnet.ip.file;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import static no.entra.bacnet.ip.utils.HexParser.toHexString;
 
 public class ByteToHexWriter {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger( ByteToHexWriter.class );
@@ -26,7 +27,7 @@ public class ByteToHexWriter {
             String hexLine = "";
             String hexValue = "";
             for (byte octet : allBytes) {
-                hexValue = String.format("%02x", octet);
+                hexValue = toHexString(octet);
                 if (hexValue.equals("81")) {
                     writeHexString(hexLine);
                     hexLine = "";
