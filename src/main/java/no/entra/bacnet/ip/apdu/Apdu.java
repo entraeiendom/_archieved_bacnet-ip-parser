@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 public class Apdu implements Serializable {
     private static final long serialVersionUID = 1L;
-    public static final String SENDER_CLIENT = "0";
-    public static final String SENDER_SERVER = "1";
     private final Enum<Sender> sender;
     private final Enum<PduType> pduType;
 
