@@ -16,7 +16,7 @@ public class Apdu implements Serializable {
 
     public Apdu(char pduTypeChar, char senderChar, char[] invokeId, char[] serviceChoice) {
         this.pduTypeChar = pduTypeChar;
-        this.pduType = PduType.valueOf(String.valueOf(pduTypeChar));
+        this.pduType = PduType.fromPduTypeChar(pduTypeChar);
         this.senderChar = senderChar;
         sender = Sender.fromSenderChar(senderChar);
         this.invokeId = invokeId;

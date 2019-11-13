@@ -1,7 +1,7 @@
 package no.entra.bacnet.ip.ardu;
 
 public enum PduType {
-    ConfirmedRequest('0');
+    ConfirmedRequest('0'), ComplexAck('3');
 
     private char pduTypeChar;
 
