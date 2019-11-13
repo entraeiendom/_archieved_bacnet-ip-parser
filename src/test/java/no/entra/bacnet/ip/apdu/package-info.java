@@ -1,4 +1,4 @@
-package no.entra.bacnet.ip.ardu;
+package no.entra.bacnet.ip.apdu;
 
 /*
 4b 4e 58 20 47 61 74 65 77 61 79 20 33 2e 65 74 67 -> KNX Gateway 3.etg

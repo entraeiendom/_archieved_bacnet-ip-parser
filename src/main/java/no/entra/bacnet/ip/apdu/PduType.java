@@ -1,4 +1,4 @@
-package no.entra.bacnet.ip.ardu;
+package no.entra.bacnet.ip.apdu;
 
 public enum PduType {
     ConfirmedRequest('0'), ComplexAck('3');

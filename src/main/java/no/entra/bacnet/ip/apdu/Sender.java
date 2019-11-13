@@ -1,4 +1,4 @@
-package no.entra.bacnet.ip.ardu;
+package no.entra.bacnet.ip.apdu;
 
 public enum Sender {
     CLIENT('0'), SERVER('1');

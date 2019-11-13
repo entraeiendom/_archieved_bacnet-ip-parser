@@ -1,4 +1,4 @@
-package no.entra.bacnet.ip.ardu;
+package no.entra.bacnet.ip.apdu;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

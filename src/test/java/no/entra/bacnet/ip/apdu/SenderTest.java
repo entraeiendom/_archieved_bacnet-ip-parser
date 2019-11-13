@@ -1,8 +1,8 @@
-package no.entra.bacnet.ip.ardu;
+package no.entra.bacnet.ip.apdu;
 
 import org.junit.jupiter.api.Test;
 
-import static no.entra.bacnet.ip.ardu.Sender.CLIENT;
+import static no.entra.bacnet.ip.apdu.Sender.CLIENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
