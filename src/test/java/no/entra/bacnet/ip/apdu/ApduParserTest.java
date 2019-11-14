@@ -5,6 +5,7 @@ import no.entra.bacnet.ip.apdu.service.UnconfirmedCovNotificationServiceDescript
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.util.List;
 
 import static no.entra.bacnet.ip.apdu.PduType.ComplexAck;
@@ -40,7 +41,7 @@ class ApduParserTest {
         String npdu = "0100";
         String apduHex = "100209001c020007d12c020007d139004e09702e91002f09cb2e"+
                 "2ea4770b0105b40d2300442f2f09c42e91002f4f";
-        //decoded: 810b0034010010020900
+        //decoded: 810b00340100100209001c020007d12c020007d1
         String hexUdpMessage = bvlc + npdu + apduHex;
         UnconfirmedRequestApdu apdu = (UnconfirmedRequestApdu) ApduParser.parseFullBacnetIpHex(hexUdpMessage);
         assertNotNull(apdu);
@@ -61,6 +62,8 @@ class ApduParserTest {
         assertTrue(monitoredDeviceIdentifier.isMonitored());
         assertEquals(2001, monitoredDeviceIdentifier.getInstanceNumber());
         assertEquals(DEVICE, monitoredDeviceIdentifier.getObjectType());
+        assertEquals(Duration.ZERO, serviceDescription.getTimeRemaining());
+        //3909
         /*
         ProcessIdentifier (0)
         ObjectIdentifier device, 2001

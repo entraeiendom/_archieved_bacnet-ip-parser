@@ -1,6 +1,8 @@
 package no.entra.bacnet.ip.apdu.service;
 
 import no.entra.bacnet.ip.utils.HexParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UnconfirmedCovNotificationServiceDescription implements ApduServiceDescription {
+    private static final Logger log = LoggerFactory.getLogger( UnconfirmedCovNotificationServiceDescription.class );
     private static final long serialVersionUID = 1L;
     private final String apduHexString;
 
@@ -25,6 +28,7 @@ public class UnconfirmedCovNotificationServiceDescription implements ApduService
     public void buildDescription() {
         buildProcessIdentifiers();
         buildObjectIdentifiers();
+        buildObservationTimeRemaining();
     }
 
     void buildProcessIdentifiers() {
@@ -55,6 +59,19 @@ public class UnconfirmedCovNotificationServiceDescription implements ApduService
             ObjectIdentifier objectIdentifier = new ObjectIdentifier(objcetType, instanceNumber);
             objectIdentifier.setMonitored(true);
             objectIds.add(objectIdentifier);
+        }
+    }
+    void buildObservationTimeRemaining() {
+        char[] hasTimeRemainingHex = apduHexString.substring(28,30).toCharArray();
+        if (Arrays.equals(hasTimeRemainingHex, "39".toCharArray())) {
+            char[] timeRemainingHex = apduHexString.substring(30,32).toCharArray();
+            if (Arrays.equals(timeRemainingHex, "00".toCharArray())) {
+                timeRemaining = Duration.ZERO;
+            } else {
+                //#1 TODO try to figure out how to parse the TimeRemaining
+                log.info("Need to implement parsing to Duration from {}", timeRemainingHex);
+                timeRemaining = null;
+            }
         }
     }
 
