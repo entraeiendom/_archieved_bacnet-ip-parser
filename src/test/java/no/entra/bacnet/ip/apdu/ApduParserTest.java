@@ -36,7 +36,7 @@ class ApduParserTest {
         String npdu = "0100";
         String apduHex = "100209001c020007d12c020007d139004e09702e91002f09cb2e"+
                 "2ea4770b0105b40d2300442f2f09c42e91002f4f";
-        //decoded: 810b003401001002
+        //decoded: 810b0034010010020900
         String hexUdpMessage = bvlc + npdu + apduHex;
         UnconfirmedRequestApdu apdu = (UnconfirmedRequestApdu) ApduParser.parseFullBacnetIpHex(hexUdpMessage);
         assertNotNull(apdu);
