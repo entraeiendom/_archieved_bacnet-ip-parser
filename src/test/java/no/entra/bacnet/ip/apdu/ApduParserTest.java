@@ -1,13 +1,13 @@
 package no.entra.bacnet.ip.apdu;
 
+import no.entra.bacnet.ip.apdu.service.UnconfirmedCovNotificationServiceDescription;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static no.entra.bacnet.ip.apdu.PduType.ComplexAck;
 import static no.entra.bacnet.ip.apdu.PduType.UnconfirmedRequest;
 import static no.entra.bacnet.ip.apdu.ServiceChoice.UnconfirmedCovNotification;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ApduParserTest {
 
@@ -36,10 +36,25 @@ class ApduParserTest {
         String npdu = "0100";
         String apduHex = "100209001c020007d12c020007d139004e09702e91002f09cb2e"+
                 "2ea4770b0105b40d2300442f2f09c42e91002f4f";
+        //decoded: 810b003401001002
         String hexUdpMessage = bvlc + npdu + apduHex;
         UnconfirmedRequestApdu apdu = (UnconfirmedRequestApdu) ApduParser.parseFullBacnetIpHex(hexUdpMessage);
         assertNotNull(apdu);
         assertEquals(UnconfirmedRequest,apdu.getPduType());
         assertEquals(UnconfirmedCovNotification, apdu.getServiceChoice());
+        UnconfirmedCovNotificationServiceDescription serviceDescription = (UnconfirmedCovNotificationServiceDescription) apdu.getServiceDescription();
+        assertNotNull(serviceDescription);
+        assertTrue(serviceDescription.hasProcessIdentifier()); //09
+        assertEquals(0, serviceDescription.getProcessIdentifierNumber()); //00
+        /*
+        ProcessIdentifier (0)
+        ObjectIdentifier device, 2001
+        ObjectIdentifier device, 2001
+        Time remaining (indefinite)
+        List of Values (4e)
+        system-status....Property-Identifier(112), se 862 112==9, her 09
+        	Ñ,Ñ9N	p./	Ë..¤w´
+#D//	Ä./O
+         */
     }
 }

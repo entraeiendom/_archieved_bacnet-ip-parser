@@ -6,19 +6,32 @@ public class Apdu implements Serializable {
     private static final long serialVersionUID = 1L;
     private final Enum<Sender> sender;
     private final Enum<PduType> pduType;
-    private Enum<ServiceChoice> serviceChoice = null;
+    private ServiceChoice serviceChoice = null;
 
     private final char pduTypeChar;
     private final char senderChar;
     private char[] invokeId;
     private final char[] serviceChoiceHex;
+    private String apduHexString;
 
-    public Apdu(char pduTypeChar, char senderChar, char[] serviceChoiceHex) {
+    private Apdu(char pduTypeChar, char senderChar, char[] serviceChoiceHex) {
         this.pduTypeChar = pduTypeChar;
         this.pduType = PduType.fromPduTypeChar(pduTypeChar);
         this.senderChar = senderChar;
         sender = Sender.fromSenderChar(senderChar);
         this.serviceChoiceHex = serviceChoiceHex;
+    }
+
+    /**
+     *
+     * @param pduTypeChar
+     * @param senderChar
+     * @param serviceChoiceHex
+     * @param apduHexString
+     */
+    public Apdu(char pduTypeChar, char senderChar, char[] serviceChoiceHex, String apduHexString) {
+        this(pduTypeChar, senderChar, serviceChoiceHex);
+        this.apduHexString = apduHexString;
     }
 
     public Enum<PduType> getPduType() {
@@ -45,11 +58,11 @@ public class Apdu implements Serializable {
         return serviceChoiceHex;
     }
 
-    public void setServiceChoice(Enum<ServiceChoice> serviceChoice) {
+    public void setServiceChoice(ServiceChoice serviceChoice) {
         this.serviceChoice = serviceChoice;
     }
 
-    public Enum<ServiceChoice> getServiceChoice() {
+    public ServiceChoice getServiceChoice() {
         return serviceChoice;
     }
 
@@ -57,4 +70,11 @@ public class Apdu implements Serializable {
         this.invokeId = invokeId;
     }
 
+    public void setApduHexString(String apduHexString) {
+        this.apduHexString = apduHexString;
+    }
+
+    public String getApduHexString() {
+        return apduHexString;
+    }
 }

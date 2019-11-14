@@ -12,20 +12,20 @@ public class ApduParser {
 //        char[] invokeId = apduHexString.substring(2,4).toCharArray();
         char[] serviceChoice = apduHexString.substring(2,4).toCharArray();
 
-        Apdu apdu = findApduFromPduType(pduTypeChar, sender, serviceChoice);
+        Apdu apdu = findApduFromPduType(pduTypeChar, sender, serviceChoice, apduHexString);
 //        apdu.setInvokeId(invokeId);
         return apdu;
     }
 
-    private static Apdu findApduFromPduType(char pduTypeChar, char sender, char[] serviceChoice) {
+    private static Apdu findApduFromPduType(char pduTypeChar, char sender, char[] serviceChoice, String apduHexString) {
         PduType pduType = PduType.fromPduTypeChar(pduTypeChar);
         Apdu apdu = null;
         switch (pduType) {
             case UnconfirmedRequest:
-                apdu = new UnconfirmedRequestApdu(sender,serviceChoice);
+                apdu = new UnconfirmedRequestApdu(sender,serviceChoice, apduHexString);
                 break;
             default:
-                apdu = new Apdu(pduTypeChar, sender, serviceChoice);
+                apdu = new Apdu(pduTypeChar, sender, serviceChoice, apduHexString);
         }
         return apdu;
     }
