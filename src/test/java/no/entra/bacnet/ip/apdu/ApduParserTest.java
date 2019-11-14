@@ -1,12 +1,16 @@
 package no.entra.bacnet.ip.apdu;
 
+import no.entra.bacnet.ip.apdu.service.ObjectIdentifier;
 import no.entra.bacnet.ip.apdu.service.UnconfirmedCovNotificationServiceDescription;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static no.entra.bacnet.ip.apdu.PduType.ComplexAck;
 import static no.entra.bacnet.ip.apdu.PduType.UnconfirmedRequest;
 import static no.entra.bacnet.ip.apdu.ServiceChoice.UnconfirmedCovNotification;
+import static no.entra.bacnet.ip.apdu.service.ObjectType.DEVICE;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ApduParserTest {
@@ -46,6 +50,13 @@ class ApduParserTest {
         assertNotNull(serviceDescription);
         assertTrue(serviceDescription.hasProcessIdentifier()); //09
         assertEquals(0, serviceDescription.getProcessIdentifierNumber()); //00
+        List<ObjectIdentifier> objectIdentifiers = serviceDescription.getObjectIds();
+        assertNotNull(objectIdentifiers);
+        assertEquals(1,objectIdentifiers.size());
+        ObjectIdentifier initiatingDeviceIdentifier = objectIdentifiers.get(0);
+        assertTrue(initiatingDeviceIdentifier.isInitiating());
+        assertEquals(2001, initiatingDeviceIdentifier.getInstanceNumber());
+        assertEquals(DEVICE, initiatingDeviceIdentifier.getObjectType());
         /*
         ProcessIdentifier (0)
         ObjectIdentifier device, 2001

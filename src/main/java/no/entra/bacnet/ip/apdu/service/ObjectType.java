@@ -1,11 +1,11 @@
 package no.entra.bacnet.ip.apdu.service;
 
 public enum ObjectType {
-    DEVICE('8');
+    DEVICE('2');
 
     private char objectTypeChar;
 
-    public static ObjectType fromPduTypeChar(char pduTypeChar) {
+    public static ObjectType fromObjectTypeChar(char pduTypeChar) {
         for (ObjectType type : values()) {
             if (type.getObjectTypeChar() == pduTypeChar) {
                 return type;

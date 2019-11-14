@@ -14,4 +14,8 @@ public class HexParser {
         String theString = hexString;
         return theString;
     }
+
+    public static Integer toInteger(char[] hex) {
+        return Integer.parseInt(toHexString(hex), 16);
+    }
 }
