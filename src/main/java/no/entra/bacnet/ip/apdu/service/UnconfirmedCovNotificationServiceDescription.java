@@ -45,11 +45,11 @@ public class UnconfirmedCovNotificationServiceDescription implements ApduService
             objectIdentifier.setInitiating(true);
             objectIds.add(objectIdentifier);
         }
-        char[] monitoredObjectInstance = apduHexString.substring(14,16).toCharArray();
+        char[] monitoredObjectInstance = apduHexString.substring(18,20).toCharArray();
         if (Arrays.equals(monitoredObjectInstance, "2c".toCharArray())) {
-            char deviceTypeHex = apduHexString.charAt(16);
+            char deviceTypeHex = apduHexString.charAt(21);
             ObjectType objcetType = ObjectType.fromObjectTypeChar(deviceTypeHex);
-            char[] instanceNumberHex = apduHexString.substring(16,18).toCharArray();
+            char[] instanceNumberHex = apduHexString.substring(24,28).toCharArray();
 
             int instanceNumber = HexParser.toInteger(instanceNumberHex);
             ObjectIdentifier objectIdentifier = new ObjectIdentifier(objcetType, instanceNumber);

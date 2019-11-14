@@ -52,11 +52,15 @@ class ApduParserTest {
         assertEquals(0, serviceDescription.getProcessIdentifierNumber()); //00
         List<ObjectIdentifier> objectIdentifiers = serviceDescription.getObjectIds();
         assertNotNull(objectIdentifiers);
-        assertEquals(1,objectIdentifiers.size());
+        assertEquals(2,objectIdentifiers.size());
         ObjectIdentifier initiatingDeviceIdentifier = objectIdentifiers.get(0);
         assertTrue(initiatingDeviceIdentifier.isInitiating());
         assertEquals(2001, initiatingDeviceIdentifier.getInstanceNumber());
         assertEquals(DEVICE, initiatingDeviceIdentifier.getObjectType());
+        ObjectIdentifier monitoredDeviceIdentifier = objectIdentifiers.get(1);
+        assertTrue(monitoredDeviceIdentifier.isMonitored());
+        assertEquals(2001, monitoredDeviceIdentifier.getInstanceNumber());
+        assertEquals(DEVICE, monitoredDeviceIdentifier.getObjectType());
         /*
         ProcessIdentifier (0)
         ObjectIdentifier device, 2001
