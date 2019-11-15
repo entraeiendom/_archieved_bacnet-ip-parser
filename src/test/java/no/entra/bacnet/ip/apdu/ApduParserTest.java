@@ -1,7 +1,6 @@
 package no.entra.bacnet.ip.apdu;
 
-import no.entra.bacnet.ip.apdu.service.ObjectIdentifier;
-import no.entra.bacnet.ip.apdu.service.UnconfirmedCovNotificationServiceDescription;
+import no.entra.bacnet.ip.apdu.service.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -64,6 +63,11 @@ class ApduParserTest {
         assertEquals(DEVICE, monitoredDeviceIdentifier.getObjectType());
         assertEquals(Duration.ZERO, serviceDescription.getTimeRemaining());
         //3909
+        assertNotNull(serviceDescription.getValues());
+        Value value = serviceDescription.getValues().get(0);
+        assertNotNull(value);
+        assertEquals(EventType.SYSTEM_STATUS, value.getType());
+        assertEquals(EventState.NORMAL, value.getObservation());
         /*
         ProcessIdentifier (0)
         ObjectIdentifier device, 2001

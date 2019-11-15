@@ -12,6 +12,14 @@ import java.util.List;
 public class UnconfirmedCovNotificationServiceDescription implements ApduServiceDescription {
     private static final Logger log = LoggerFactory.getLogger( UnconfirmedCovNotificationServiceDescription.class );
     private static final long serialVersionUID = 1L;
+    public static final String PD_OPENING_TAG_2_HEX = "2e";
+    public static final String PD_CLOSING_TAG_2_HEX = "2f";
+    public static final String PD_OPENING_TAG_4_HEX = "4e";
+    public static final String PD_CLOSING_TAG_4_HEX = "4f";
+    public static final String SD_CONTEXT_TAG_0_HEX = "09";
+    public static final String SD_CONTEXT_TAG_1_HEX = "1c";
+    public static final String SD_CONTEXT_TAG_2_HEX = "2c";
+    public static final String SD_CONTEXT_TAG_3_HEX = "39";
     private final String apduHexString;
 
     private char[] subscriberProcessIdentifier = null;
@@ -29,17 +37,18 @@ public class UnconfirmedCovNotificationServiceDescription implements ApduService
         buildProcessIdentifiers();
         buildObjectIdentifiers();
         buildObservationTimeRemaining();
+        buildListOfValues();
     }
 
     void buildProcessIdentifiers() {
         char[] hasProcessIdentifier = apduHexString.substring(4,6).toCharArray();
-        if (Arrays.equals(hasProcessIdentifier, "09".toCharArray())) {
+        if (Arrays.equals(hasProcessIdentifier, SD_CONTEXT_TAG_0_HEX.toCharArray())) {
             subscriberProcessIdentifier = apduHexString.substring(6,8).toCharArray();
         }
     }
     void buildObjectIdentifiers() {
         char[] initiatingObjectInstance = apduHexString.substring(8,10).toCharArray();
-        if (Arrays.equals(initiatingObjectInstance, "1c".toCharArray())) {
+        if (Arrays.equals(initiatingObjectInstance, SD_CONTEXT_TAG_1_HEX.toCharArray())) {
             char deviceTypeHex = apduHexString.charAt(11);
             ObjectType objectType = ObjectType.fromObjectTypeChar(deviceTypeHex);
             char[] instanceNumberHex = apduHexString.substring(14,18).toCharArray();
@@ -50,7 +59,7 @@ public class UnconfirmedCovNotificationServiceDescription implements ApduService
             objectIds.add(objectIdentifier);
         }
         char[] monitoredObjectInstance = apduHexString.substring(18,20).toCharArray();
-        if (Arrays.equals(monitoredObjectInstance, "2c".toCharArray())) {
+        if (Arrays.equals(monitoredObjectInstance, SD_CONTEXT_TAG_2_HEX.toCharArray())) {
             char deviceTypeHex = apduHexString.charAt(21);
             ObjectType objcetType = ObjectType.fromObjectTypeChar(deviceTypeHex);
             char[] instanceNumberHex = apduHexString.substring(24,28).toCharArray();
@@ -63,7 +72,7 @@ public class UnconfirmedCovNotificationServiceDescription implements ApduService
     }
     void buildObservationTimeRemaining() {
         char[] hasTimeRemainingHex = apduHexString.substring(28,30).toCharArray();
-        if (Arrays.equals(hasTimeRemainingHex, "39".toCharArray())) {
+        if (Arrays.equals(hasTimeRemainingHex, SD_CONTEXT_TAG_3_HEX.toCharArray())) {
             char[] timeRemainingHex = apduHexString.substring(30,32).toCharArray();
             if (Arrays.equals(timeRemainingHex, "00".toCharArray())) {
                 timeRemaining = Duration.ZERO;
@@ -72,6 +81,16 @@ public class UnconfirmedCovNotificationServiceDescription implements ApduService
                 log.info("Need to implement parsing to Duration from {}", timeRemainingHex);
                 timeRemaining = null;
             }
+        }
+    }
+
+    void buildListOfValues() {
+        int openingTagPosition = apduHexString.indexOf(PD_OPENING_TAG_4_HEX);
+        int closingTagPosition = apduHexString.indexOf(PD_CLOSING_TAG_4_HEX);
+        if (openingTagPosition >0 && closingTagPosition > 0) {
+            String listOfValuesHexString = apduHexString.substring(openingTagPosition, closingTagPosition + PD_CLOSING_TAG_4_HEX.length());
+            log.debug("ListOfValues: {}", listOfValuesHexString);
+            values = ValuesParser.parseListOfValuesHexString(listOfValuesHexString);
         }
     }
 
