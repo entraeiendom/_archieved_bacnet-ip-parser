@@ -1,7 +1,8 @@
 package no.entra.bacnet.ip.apdu.service;
 
 public enum EventType {
-    SYSTEM_STATUS("70");
+    SYSTEM_STATUS("70"),
+    TIME_OF_DEVICE_RESTART("cb");
 
     private String eventTypeHex;
 

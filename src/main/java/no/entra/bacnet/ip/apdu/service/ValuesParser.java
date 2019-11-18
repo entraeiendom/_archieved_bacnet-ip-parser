@@ -23,11 +23,14 @@ public class ValuesParser {
      * @throws IllegalArgumentException
      */
     public static List<Value> parseListOfValuesHexString(String listOfValuesHexString) throws IllegalArgumentException {
+//        String json = listOfValuesHexString.replace("2e", "{");
+//        json = json.replace("2f", "}");
+//        System.out.println(json);
         List<Value> values = new ArrayList<>();
         if (listOfValuesHexString != null && listOfValuesHexString.startsWith(PD_OPENING_TAG_4_HEX) && listOfValuesHexString.endsWith(PD_CLOSING_TAG_4_HEX)) {
-           log.debug("Are able to parse {}", listOfValuesHexString);
+            log.debug("Are able to parse {}", listOfValuesHexString);
             System.out.println("To Parse: " + listOfValuesHexString);
-           String listInHex = listOfValuesHexString.substring(PD_OPENING_TAG_4_HEX.length(), listOfValuesHexString.length() - PD_CLOSING_TAG_4_HEX.length());
+            String listInHex = listOfValuesHexString.substring(PD_OPENING_TAG_4_HEX.length(), listOfValuesHexString.length() - PD_CLOSING_TAG_4_HEX.length());
            /*
  X'4E' PD Opening Tag 4 (List of Values)
     X'09' SD Context Tag 0 (Property Identifier, L=1)
@@ -44,25 +47,67 @@ public class ValuesParser {
     X'2F' PD Closing Tag 2 (Value)
 X'4F'
             */
-           //4e09702e91002f09cb2e2ea4770b0105b40d2300442f2f09c42e91002f4f
-           String hexPair = listInHex.substring(0,2);
-           if (hexPair.equals(SD_CONTEXT_TAG_0_HEX)) {
-               hexPair = listInHex.substring(2,4);
-               //TODO type enum
-               String type = hexPair;
-               int position = 4;
-               int valueClosing = listInHex.indexOf(PD_CLOSING_TAG_2_HEX, position);
-               String valueHexString = listInHex.substring(position, valueClosing + PD_CLOSING_TAG_2_HEX.length());
-               Value value = buildValue(type, valueHexString);
-               values.add(value);
-           }
+            //4e09702e91002f09cb2e2ea4770b0105b40d2300442f2f09c42e91002f4f
+            int startTag = 0;
+            /*listInHex.indexOf(SD_CONTEXT_TAG_0_HEX);
+            int endTag = listInHex.indexOf(PD_CLOSING_TAG_2_HEX) + 2;
+            String listItemHex = listInHex.substring(startTag, endTag);
+            Value value = parseListItem(listItemHex);
+            if (value != null) {
+                values.add(value);
+            }
+            listInHex = listInHex.substring(endTag+2);
 
+             */
+            startTag = listInHex.indexOf(SD_CONTEXT_TAG_0_HEX);
+            while (startTag > -1) {
+                int endTag = listInHex.indexOf(PD_CLOSING_TAG_2_HEX) + 2;
+                String listItemHex = listInHex.substring(startTag, endTag);
+                Value value = parseListItem(listItemHex);
+                if (value != null) {
+                    values.add(value);
+                }
+                listInHex = listInHex.substring(endTag);
+                startTag = listInHex.indexOf(SD_CONTEXT_TAG_0_HEX);
+            }
+           /*
+               //Remove parsed
+               listInHex = listInHex.substring()
+               position = position + valueHexString.length();
+               System.out.println("Cahr at " + position + "; " + listInHex.charAt(position));
+               if (listInHex.indexOf(PD_OPENING_TAG_2_HEX, position) > 0) {
+                   hexPair = listInHex.substring(position, position + 2);
+                   if (hexPair.equals(SD_CONTEXT_TAG_0_HEX)) {
+                       type = listInHex.substring(position +2, position +4);
+                       valueClosing = listInHex.indexOf(PD_CLOSING_TAG_2_HEX, position);
+                       valueHexString = listInHex.substring(position, valueClosing + PD_CLOSING_TAG_2_HEX.length());
+                       value = buildValue(type, valueHexString);
+                       if (value != null) {
+                           values.add(value);
+                       }
+                   }
+               }
+            */
         } else {
             throw new IllegalArgumentException("listOfValuesHexString must start with " + PD_OPENING_TAG_4_HEX +
                     ", and end with " + PD_CLOSING_TAG_4_HEX + ". Actual content: " + listOfValuesHexString);
         }
 
         return values;
+    }
+
+    public static Value parseListItem(String listItemHex) {
+        Value value = null;
+        String hexPair = listItemHex.substring(0, 2);
+        if (hexPair.equals(SD_CONTEXT_TAG_0_HEX)) {
+            hexPair = listItemHex.substring(2, 4);
+            String type = hexPair;
+            int position = 4;
+            int valueClosing = listItemHex.indexOf(PD_CLOSING_TAG_2_HEX, position);
+            String valueHexString = listItemHex.substring(position, valueClosing + PD_CLOSING_TAG_2_HEX.length());
+            value = buildValue(type, valueHexString);
+        }
+        return value;
     }
 
     public static Value buildValue(String typeHex, String valueHexString) {
