@@ -21,6 +21,21 @@ public enum PduType {
         return null;
     }
 
+    public static PduType fromPduTypeOctet(String pduTypeOctet) {
+        switch (pduTypeOctet) {
+            case "00":
+                return ConfirmedRequest;
+            case "10":
+                return UnconfirmedRequest;
+            case "20":
+                return SimpleAck;
+            case "30":
+                return ComplexAck;
+            default:
+                return null;
+        }
+    }
+
     public char getPduTypeChar() {
         return pduTypeChar;
     }
