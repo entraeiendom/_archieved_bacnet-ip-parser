@@ -1,5 +1,7 @@
 package no.entra.bacnet.ip.apdu;
 
+import no.entra.bacnet.ip.Octet;
+
 public enum PduType {
     ConfirmedRequest('0'),
     UnconfirmedRequest('1'),
@@ -21,8 +23,11 @@ public enum PduType {
         return null;
     }
 
-    public static PduType fromPduTypeOctet(String pduTypeOctet) {
-        switch (pduTypeOctet) {
+    public static PduType fromPduTypeOctet(Octet pduTypeOctet) {
+        if (pduTypeOctet == null) {
+            return null;
+        }
+        switch (pduTypeOctet.toString()) {
             case "00":
                 return ConfirmedRequest;
             case "10":

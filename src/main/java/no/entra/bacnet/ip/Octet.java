@@ -29,4 +29,9 @@ public class Octet {
     public char[] getOctet() {
         return octet;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(octet);
+    }
 }

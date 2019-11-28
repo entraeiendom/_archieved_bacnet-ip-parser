@@ -1,5 +1,6 @@
 package no.entra.bacnet.ip.apdu;
 
+import no.entra.bacnet.ip.Octet;
 import org.junit.jupiter.api.Test;
 
 import static no.entra.bacnet.ip.apdu.PduType.ConfirmedRequest;
@@ -10,8 +11,9 @@ class PduTypeOctetTest {
 
     @Test
     void confirmedRequest() {
-        assertEquals(ConfirmedRequest.fromPduTypeOctet("00"), ConfirmedRequest);
-        assertEquals(PduType.fromPduTypeOctet("00"), ConfirmedRequest);
-        assertNull(PduType.fromPduTypeOctet("xx"));
+        Octet pduType = new Octet("00");
+        assertEquals(ConfirmedRequest.fromPduTypeOctet(pduType), ConfirmedRequest);
+        assertEquals(PduType.fromPduTypeOctet(pduType), ConfirmedRequest);
+        assertNull(PduType.fromPduTypeOctet(null));
     }
 }
