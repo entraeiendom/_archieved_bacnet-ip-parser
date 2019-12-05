@@ -9,8 +9,22 @@
   <version>0.1-SNAPSHOT</version>
 
   <name>bacnet-ip-parser</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://github.com/entraeiendom/bacnet-ip-parser/blob/master/README.md</url>
+  <developers>
+    <developer>
+      <id>baardl</id>
+      <name>Bard Lind</name>
+      <email>bard.lind@gmail.com</email>
+      <roles>
+        <role>Developer</role>
+      </roles>
+    </developer>
+  </developers>
+  <scm>
+    <developerConnection>scm:git:ssh://git@github.com/entraeiendom/bacnet-ip-parser.git</developerConnection>
+    <connection>scm:git:https://github.com/entraeiendom/bacnet-ip-parser.git</connection>
+    <url>https://github.com/entraeiendom/bacnet-ip-parser</url>
+  </scm>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
