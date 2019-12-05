@@ -5,7 +5,7 @@
 
   <groupId>no.entra.bacnet</groupId>
   <artifactId>bacnet-ip-parser</artifactId>
-  <version>0.1</version>
+  <version>0.2-SNAPSHOT</version>
 
   <name>bacnet-ip-parser</name>
   <url>https://github.com/entraeiendom/bacnet-ip-parser/blob/master/README.md</url>
@@ -23,7 +23,7 @@
     <developerConnection>scm:git:ssh://git@github.com/entraeiendom/bacnet-ip-parser.git</developerConnection>
     <connection>scm:git:https://github.com/entraeiendom/bacnet-ip-parser.git</connection>
     <url>https://github.com/entraeiendom/bacnet-ip-parser</url>
-    <tag>bacnet-ip-parser-0.1</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <properties>
